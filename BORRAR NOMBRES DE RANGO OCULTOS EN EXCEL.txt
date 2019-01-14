@@ -1,0 +1,11 @@
+Sub DeleteHiddenNames()
+Dim n As Name
+Dim Count As Integer
+For Each n In ActiveWorkbook.Names
+If Not n.Visible Then
+n.Delete
+Count = Count + 1
+End If
+Next n
+MsgBox Count & “ hidden names were deleted.”
+End Sub
