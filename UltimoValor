@@ -1,0 +1,60 @@
+Function UltimoValor(months As Range) As Single
+' Esta formula identifica en un rango de celdas de maximo de 12 celdas, el ultimo valor diferente a cero en ese rango _
+  .La formula se usa para identeficar la ultima glicosilada de los pacientes diabeticos en un rango de celdas horizontales.
+  
+  
+  Dim cell As Range
+  Dim rng As Range
+  Set rng = months
+  
+  
+  Dim ArrayofCells() As Single
+  Dim i As Byte
+  Dim x As Byte
+ 
+  Dim Ultimo_Valor_Array As Single
+  
+  
+
+  
+  
+  
+  'con este ciclo for cuento cuantas celdas paso el usuario como parametro
+  For Each cell In rng
+    i = i + 1
+  Next cell
+'---------------------------------------------------------------------------------------
+
+  ' Este if evalua si el rango de celdas contiene mas de doce celdas
+If i > 12 Then
+    MsgBox "Solo se permiten doce meses"
+    i = 0
+    MsgBox "Por favor ingrese nuevamente rango de celdas"
+ElseIf i <= 12 Then
+    'Este elseif evalua si el numero de celdas de rng es menor a 12
+    'y crea el array con el mismo numero de elementos que el rango
+    
+    ReDim ArrayofCells(i)
+    For x = 1 To i
+    'este ciclo "for" recorre el array con su nuevo tamaño y le asigna el valor
+    'de cada celda del rango a cada elemento del array
+        ArrayofCells(x) = rng(x).Value
+    Next x
+    
+End If
+'----------------------------------------------------------------------------------------
+
+For x = 1 To i
+'este ciclo for recorre el ArrayofCells y determina cual es el ultimo valor no vacio en el array
+' y asigna ese ultimo valor a la funcion para que la muestre
+    If ArrayofCells(x) <> 0 Then
+        Ultimo_Valor_Array = ArrayofCells(x)
+    End If
+     
+ Next x
+  
+        UltimoValor = Ultimo_Valor_Array
+ 
+    
+
+End Function
