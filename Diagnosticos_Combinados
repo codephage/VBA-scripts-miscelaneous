@@ -1,0 +1,72 @@
+Function Diagnosticos_Combinados(diagnosticos As Range) As String
+'Esta funcion genera los diagnosticos combinados de los pacientes del Programa Cuidate, a partir de una tabla _
+dinamica, con las columnas en el siguiente orden:HTA,DSL,DBT,ASMA. En filas se coloca nombre del beneficiario,en _
+y en valores la cuenta de beneficiario. La formula a partir de la celda no vacia con respecto a su columna, _
+identifica el diagnostico de pacientes.
+
+
+
+
+Dim i As Byte
+Dim dx As Range
+Dim celda As Range
+Dim x As Byte
+Dim ArrayOfCeldas() As String
+Dim dxcomb As String
+
+
+
+
+Set dx = diagnosticos
+
+' este ciclo for recorre el rango y cuenta el numero de celdas del rango
+For Each celda In dx
+    i = i + 1
+  Next celda
+'--------------------------------------------------------------------------
+
+'Este IF verifica que no hayan mas de 4 celdas en el rango de dx
+If i > 4 Then
+    MsgBox "Solo se permiten 4 diagnosticos"
+    i = 0
+    MsgBox "Por favor ingrese nuevamente rango de celdas"
+ElseIf i <= 4 Then
+    ReDim ArrayOfCeldas(4)
+    For x = 1 To 4
+    'este ciclo "for" recorre el array con su nuevo tamaño y le asigna el valor
+    'de cada celda del rango a cada elemento del array
+        ArrayOfCeldas(x) = dx(x).Value
+    Next x
+End If
+'-------------------------------------------------------------------------------
+For x = 1 To i
+'este ciclo for evalua si la posicion del array esta llena y si esta llena asigna el diagnostico de acuerdo a la posicion
+    If ArrayOfCeldas(x) <> "" Then
+        If x = 1 Then
+        ArrayOfCeldas(x) = "HTA"
+        ElseIf x = 2 Then
+        ArrayOfCeldas(x) = "DSL"
+        ElseIf x = 3 Then
+        ArrayOfCeldas(x) = "DBT"
+        ElseIf x = 4 Then
+        ArrayOfCeldas(i) = "ASMA"
+        End If
+     End If
+      
+  Next x
+  
+  For x = 1 To 4
+  'este ciclo for asigna los valores del array a la variable dxcomb y le coloca el simbolo "+"
+    If ArrayOfCeldas(x) <> "" Then
+    dxcomb = dxcomb + ArrayOfCeldas(x) + "+"
+    End If
+    
+  Next x
+  dxcomb = Left(dxcomb, Len(dxcomb) - 1) ' este comnado remueve el ultimo caracter "+" que queda de residuo en la variable
+ 
+  
+  
+  Diagnosticos_Combinados = dxcomb
+  
+
+End Function
